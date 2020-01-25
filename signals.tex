@@ -1,0 +1,155 @@
+\documentclass[12pt]{report}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% package and document formatting stuff
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% symbols and math stuff
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{tikz}
+\usepackage{tkz-graph}
+\usetikzlibrary{arrows,%
+                petri,%
+                topaths}%
+
+\usepackage{tkz-berge}
+
+
+% math operators
+\usepackage{amsopn}
+
+% script and caligraphics
+\usepackage{eucal,mathrsfs}
+
+% indexing
+\usepackage{makeidx}
+
+\usepackage{enumerate}
+
+% formatting
+\usepackage{fullpage}
+
+% links and colors
+\usepackage{color}
+\usepackage[pdfstartview=FitH,
+%             pdfauthor={\myauthor},
+%             pdftitle={\mytitle},
+            colorlinks,
+            linkcolor=reference,
+            citecolor=citation,
+            urlcolor=e-mail,
+            backref]{hyperref}
+\usepackage[all]{xy}
+
+\definecolor{todo}{rgb}{.80,.20,.20}
+\definecolor{e-mail}{rgb}{0,.40,.80}
+\definecolor{reference}{rgb}{.10,.40,.42}
+\definecolor{mrnumber}{rgb}{.80,.40,0}
+\definecolor{citation}{rgb}{0,.40,.80}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% theorem stuff
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\theoremstyle{plain}
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{deflem}[thm]{Definition/Lemma}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{convention}[thm]{Convention}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{aside}[thm]{Aside}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{ex}[thm]{Example}
+\newtheorem{facts}[thm]{Facts}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{prop}[thm]{Proposition}
+
+\newtheorem{question}[thm]{Question}
+\newtheorem{exercise}{Exercise}[section]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% typography stuff
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\mb}[1]{\mathbf #1}
+\newcommand{\mbb}[1]{\mathbb #1}
+\newcommand{\mf}[1]{\mathfrak #1}
+\newcommand{\mc}[1]{\mathcal #1}
+\newcommand{\ms}[1]{\mathscr #1}
+\newcommand{\mcu}[1]{\mathcu #1}
+\newcommand{\oper}[1]{\operatorname{#1}}
+
+\newcommand{\da}{\downarrow}
+\newcommand{\ra}{\rightarrow}
+\newcommand{\hra}{\hookrightarrow}
+\newcommand{\dra}{\dashrightarrow}
+\newcommand{\la}{\leftarrow}
+\newcommand{\lra}{\longrightarrow}
+
+\newcommand{\ov}{\overline}
+\newcommand{\til}{\widetilde}
+\newcommand{\wh}{\widehat}
+
+\newcommand{\ZZ}{\mathbb{Z}}
+
+\newcommand{\lcm}{\oper{lcm}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% other stuff
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\todo}[1]{\textcolor{todo}{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% end preamble
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% title stuff
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\author{Daniel Krashen}
+\title{Notes on Signal Processing\\Discrete Fourier and Wavelet Transforms}
+
+\maketitle
+\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% document stuff
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter*{Version Notes}
+\addcontentsline{toc}{chapter}{Version Notes}
+
+\iffalse
+\section{Updates 1/25/2020}
+\begin{itemize}
+\item Nothing to say, but generally update information would go here.
+\item e.g. added stuff to Section~\ref{lecture 1}
+\end{itemize}
+\fi
+
+\chapter{Lecture 1: Complex exponentials and periodic signals}
+
+\section{Complex arithmetic and polar form}
+
+Although in typical applications, we deal with real numbers (to some fixed precision), allowing ourselves to work also with complex number can add a great variety of additional tools to bring to bear. In particular, we will eventually see that periodic functions, such as the sine and cosine, can be efficiently and compactly described via complex exponential functions, and doing this makes it a great deal more efficient decompose periodic signals into basic waveforms (i.e. via the Fourier transform).
+
+Recall that a complex number $z = x + iy$, can be thought of graphically as a point in the complex plane, where we think of $x$ and $y$ as the coordinates of a point $(x, y)$. In this representation, it is clear that addition of complex numbers corresponds to addition of vectors -- that is
+\[ (x_1 + i y_1) + (x_2 + i y_2) = (x_1 + x_2) + i (y_1 + y_2)\]
+agrees with the vector sum
+\[ (x_1, y_1) + (x_2, y_2) = (x_1 + x_2, y_1 + y_2) \]
+But what about complex multiplication?
+
+
+%\bibliographystyle{alpha}
+%\bibliography{citations}
+\printindex
+
+\end{document}
