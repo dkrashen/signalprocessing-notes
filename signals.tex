@@ -145,7 +145,15 @@ Recall that a complex number $z = x + iy$, can be thought of graphically as a po
 \[ (x_1 + i y_1) + (x_2 + i y_2) = (x_1 + x_2) + i (y_1 + y_2)\]
 agrees with the vector sum
 \[ (x_1, y_1) + (x_2, y_2) = (x_1 + x_2, y_1 + y_2) \]
-But what about complex multiplication?
+But what about complex multiplication? For multiplication we see a nice visual interpretation by considering a polar representation of the complex number: if the point $(x_j, y_j)$, $j = 1, 2$ in the plane correpsonds to a vector of length $r_j$ and making an angle of $\theta_j$ with the positive $x$-axis, then we may write
+\[z_j = x_j + i y_j = r_j \cos \theta_j + i r_j \sin \theta_j \]
+and we find (using the sum formula for sine and cosine):
+
+\begin{align*}
+(x_1 + i y_1)(x_2 + i y_2) &= (r_1 \cos \theta_1 + i r_1 \sin \theta_1)(r_2 \cos \theta_2 + i r_2 \sin \theta_2) \\ &= r_1 r_2 \Big( (\cos \theta_1 \cos \theta_2 - \sin \theta_1 \sin \theta_2) (\cos \theta_1 \sin \theta_2 + \cos \theta_2 \sin \theta_1 )\Big) \\ &= r_1 r_2 \cos (\theta_1 + \theta_2) + i r_1 r_2 \sin (\theta_1 + \theta_2).
+\end{align*}
+
+Said another way, we can visualize the multiplication of complex numbers in the following way: \textbf{lengths multiply and angles add}.
 
 
 %\bibliographystyle{alpha}
