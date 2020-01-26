@@ -149,13 +149,28 @@ But what about complex multiplication? For multiplication we see a nice visual i
 \[z_j = x_j + i y_j = r_j \cos \theta_j + i r_j \sin \theta_j \]
 and we find (using the sum formula for sine and cosine):
 
-\begin{align*}
+\begin{align} \label{angles add}
 (x_1 + i y_1)(x_2 + i y_2) &= (r_1 \cos \theta_1 + i r_1 \sin \theta_1)(r_2 \cos \theta_2 + i r_2 \sin \theta_2) \\ &= r_1 r_2 \Big( (\cos \theta_1 \cos \theta_2 - \sin \theta_1 \sin \theta_2) (\cos \theta_1 \sin \theta_2 + \cos \theta_2 \sin \theta_1 )\Big) \\ &= r_1 r_2 \cos (\theta_1 + \theta_2) + i r_1 r_2 \sin (\theta_1 + \theta_2).
-\end{align*}
+\end{align}
 
 Said another way, we can visualize the multiplication of complex numbers in the following way: \textbf{lengths multiply and angles add}.
 
+\section{Complex Exponentials}
 
+We can view complex multiplication in a more intuitive light with the aid of Euler's formula, which gives a relationship between the complex exponential function and the polar representation of a complex number. Euler's formula states that for a real number\footnote{in fact the formula holds for complex numbers as well, and can be taken as a definition of cosine and sine for complex arguments} $t$, we have
+\[e^{i \theta} = \cos \theta + i \sin \theta. \]
+This formula can be verified by, for example, replacing each side by the corresponding power series expansions.
+
+The complex exponential function -- that is, the function $e^z$ where $z$ can be any complex number, shares the usual familar properties with its real counterpart: $e^{z + w} = e^z e^w$, immediately giving again the multiplication rule from equation~\ref{angles add} above.
+
+Let's visualize how the graph of the function $e^{i \theta}$ as a function of the real variable $\theta$. 
+
+\iffalse
+Given a complex number, expressed as \[z = r \cos \theta + i r \sin \theta,\] we see that we can raise $z$ to positive integer powers by the formula
+\[z^n = r^n \cos n\theta + i r^n \sin n\theta.\]
+In particular, it makes sense to extend this definition and simply define the exponential $z^s$ for any real number $s$, by the formula
+\[z^s = r^s \cos s\theta + i r^s \sin s\theta\]
+\fi
 %\bibliographystyle{alpha}
 %\bibliography{citations}
 \printindex
