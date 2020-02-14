@@ -116,6 +116,7 @@
 
 \author{Daniel Krashen}
 \title{Notes on Signal Processing\\Discrete Fourier and Wavelet Transforms}
+\date{\today}
 
 \maketitle
 \tableofcontents
@@ -124,8 +125,10 @@
 % document stuff
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\iffalse
 \chapter*{Version Notes}
 \addcontentsline{toc}{chapter}{Version Notes}
+\fi
 
 \iffalse
 \section{Updates 1/25/2020}
@@ -135,7 +138,105 @@
 \end{itemize}
 \fi
 
-\chapter{Lecture 1: Complex exponentials and periodic signals}
+\chapter{The Discrete Fourier Transform}
+
+The discrete Fourier transform is a tool to go between describing a sampled, periodic signal as a list of measurements and describing it as a combination of basic waveforms.
+
+\section{Periodic signals and their representations}
+
+\subsection{Periodic signals as vectors}
+
+We start by imagining we have a periodic signal $f$, which we sample at a times $0, 1, 2, N-1$. We denote these measurements as
+\[ f[0], f[1], f[2], \ldots, f[N-1]. \]
+We assume that the signal is periodic with period $N$, so that the value at $N$ agrees with the value at $0$, the value at $N+1$ agrees with the value at $1$, etc. That is, we have $f[N] = f[0]$, and more generally $f[k + N] = f[k]$ for all $k$.
+
+We may write this information as a vector
+\[ 
+\vec f = 
+\left[
+\begin{matrix}
+f[0] \\
+f[1] \\
+\vdots \\
+f[N-1]	
+\end{matrix}
+\right]
+\]
+
+That is, if we write $f$ for the sampled period signal, we will write $\vec f$ for the vector whose coordinates are the values sampled.
+Implicitly, in doing this, we are regarding these (sampled periodic) signals themselves as forming a vector space, and we have chosen a basis of such signals. Explicitly, when we write
+
+\begin{align*}
+\vec f = 
+\left[
+\begin{matrix}
+f[0] \\
+f[1] \\
+\vdots \\
+f[N-1]	
+\end{matrix}
+\right]
+&=
+f[0]
+\left[
+\begin{matrix}
+1 \\
+0 \\
+\vdots \\
+0 \\
+0	
+\end{matrix}
+\right]
++
+f[1]
+\left[
+\begin{matrix}
+0 \\
+1 \\
+\vdots \\
+0 \\
+0	
+\end{matrix}
+\right]
++ 
+\cdots
++
+f[N-1]
+\left[
+\begin{matrix}
+0 \\
+0 \\
+\vdots \\
+0 \\
+1
+\end{matrix}
+\right] \\
+\end{align*}
+we think of this as corresponding to the equation
+\[f = f[0]e_0 + f[1] e_1 + \cdots f[N-1]e_{N-1}\\
+= \sum_{k = 0}^{N-1} f[k] e_k,
+\]
+where the signal $e_k$ has values described by
+\[ e_k[j] = 0 \text{ if $k \neq j$, and } e_k[k] = 1. \]
+
+\subsection{The wave basis for period signals}
+
+Let us introduce the basic ``wave functions'' which we will use to describe our signals. These special periodic signals are described as complex number of unit length, that rotate about the origin at a constant rate.
+
+That is, such a wave function $E$ will be determined by an angle $\theta$, and when measured at time $j$, yields a complex number of unit length, making an angle of $j\theta$ in the counterclockwise direction with the positive $x$-axis, as shown below.
+
+As described in Chapter~\ref{complex exponentials}, we may represent this complex number as 
+\[E[j] = e^{ij\theta} = \cos{j\theta} + i \sin{j \theta}.\]
+
+
+
+\section{Filters, circular convolution and circulant matrices}
+
+\section{The fast Fourier transform}
+
+\appendix
+
+\chapter{Complex exponentials}
 
 \section{Complex arithmetic and polar form}
 
@@ -155,15 +256,17 @@ and we find (using the sum formula for sine and cosine):
 
 Said another way, we can visualize the multiplication of complex numbers in the following way: \textbf{lengths multiply and angles add}.
 
-\section{Complex Exponentials}
+\section{Complex Exponentials} \label{complex exponentials}
 
-We can view complex multiplication in a more intuitive light with the aid of Euler's formula, which gives a relationship between the complex exponential function and the polar representation of a complex number. Euler's formula states that for a real number\footnote{in fact the formula holds for complex numbers as well, and can be taken as a definition of cosine and sine for complex arguments} $t$, we have
+We can view complex multiplication in a more intuitive light with the aid of Euler's formula, which gives a relationship between the complex exponential function and the polar representation of a complex number. Euler's formula states that for a real number\footnote{in fact the formula holds for complex numbers as well, and can be taken as a definition of cosine and sine for complex arguments} $\theta$, we have
 \[e^{i \theta} = \cos \theta + i \sin \theta. \]
 This formula can be verified by, for example, replacing each side by the corresponding power series expansions.
 
 The complex exponential function -- that is, the function $e^z$ where $z$ can be any complex number, shares the usual familar properties with its real counterpart: $e^{z + w} = e^z e^w$, immediately giving again the multiplication rule from equation~\ref{angles add} above.
 
+\iffalse
 Let's visualize how the graph of the function $e^{i \theta}$ as a function of the real variable $\theta$. 
+\fi
 
 \iffalse
 Given a complex number, expressed as \[z = r \cos \theta + i r \sin \theta,\] we see that we can raise $z$ to positive integer powers by the formula
@@ -171,6 +274,9 @@ Given a complex number, expressed as \[z = r \cos \theta + i r \sin \theta,\] we
 In particular, it makes sense to extend this definition and simply define the exponential $z^s$ for any real number $s$, by the formula
 \[z^s = r^s \cos s\theta + i r^s \sin s\theta\]
 \fi
+
+\section{Roots of unity}
+
 %\bibliographystyle{alpha}
 %\bibliography{citations}
 \printindex
