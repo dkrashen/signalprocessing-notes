@@ -219,6 +219,10 @@ we think of this as corresponding to the equation
 where the signal $e_k$ has values described by
 \[ e_k[j] = 0 \text{ if $k \neq j$, and } e_k[k] = 1. \]
 
+\begin{notn}
+We remark that, unlike conventional notation we index our vectors (and later our matrices), starting with the index of $0$ (as in computer science).
+\end{notn}
+
 \subsection{The wave basis for period signals}
 
 Let us introduce the basic ``wave functions'' which we will use to describe our signals. These special periodic signals are described as complex number of unit length, that rotate about the origin at a constant rate.
@@ -228,8 +232,39 @@ That is, such a wave function $E$ will be determined by an angle $\theta$, and w
 As described in Chapter~\ref{complex exponentials}, we may represent this complex number as 
 \[E[j] = e^{ij\theta} = \cos{j\theta} + i \sin{j \theta}.\]
 
+Of course, since we are interested in periodic signals, we will require that $N\theta$ is a multiple of $2\pi$. We therefore have the following natural choices for $\theta$:
+\[\theta = 0, 2 \pi/N, 4 \pi / N, \ldots, 2k\pi/N, \ldots, 2(N-1)\pi/N.\]
+Note that it would serve no purpose to continue, as $2N\pi/N = 2\pi$ also corresponds to an angle of $0$.
 
+We can represent these periodic signals as follows. Setting $E_k$ to be the signal with $\theta= 2k\pi/N$, we have:
+\[E_k[j] = e^{ij\theta} = e^{ij2k\pi/N} = \left(e^{2\pi i / N}\right)^{jk}. \]
+For convenience, we let $\omega = e^{2 \pi i / N}$, so that we may write our basic waveforms as:
+\[E_k[j] = \omega^{jk} \]
 
+The critical fact about these signals is that they also form a basis for the vector space of our periodic signals. That is, just as we may uniquely represent a signal $f$ as a linear combination of the signals $e_k$, we may also uniquely represent it is a linear combination of the signals $E_k$ as well. The change of basis matrix has a particularly nice form. It turns out to be equal to $1/N F_N$, where $F_N$ is the ``Fourier'' matrix. It's entries are given by $(F_N)_{j,k} = \omega^{-jk}$. That is, if we write $f = \sum f[k] e_k$, and do the matrix product:
+\[
+F_N 
+\left[
+\begin{matrix}
+	f[0] \\
+	f[1] \\
+	\vdots \\
+	f[N-1]
+\end{matrix}
+\right]
+=
+\left[
+\begin{matrix}
+	\hat f[0] \\
+	\hat f[1] \\
+	\vdots \\
+	\hat f[N-1]
+\end{matrix}
+\right]
+\]
+
+Then the coefficients $\hat f[k]$ of the resulting vector, which are called the \textbf{Fourier coefficients} of $f$, are related to expressing $f$ in terms of the basic waveforms as follows:
+\[f = \sum_k f[k] e_k = \sum \frac 1 N \hat f[k] E_k \]
 \section{Filters, circular convolution and circulant matrices}
 
 \section{The fast Fourier transform}
