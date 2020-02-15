@@ -47,6 +47,8 @@
 \definecolor{mrnumber}{rgb}{.80,.40,0}
 \definecolor{citation}{rgb}{0,.40,.80}
 
+\usepackage{graphicx}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % theorem stuff
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -151,14 +153,14 @@ We start by imagining we have a periodic signal $f$, which we sample at a times 
 We assume that the signal is periodic with period $N$, so that the value at $N$ agrees with the value at $0$, the value at $N+1$ agrees with the value at $1$, etc. That is, we have $f[N] = f[0]$, and more generally $f[k + N] = f[k]$ for all $k$.
 
 We may write this information as a vector
-\[ 
-\vec f = 
+\[
+\vec f =
 \left[
 \begin{matrix}
 f[0] \\
 f[1] \\
 \vdots \\
-f[N-1]	
+f[N-1]
 \end{matrix}
 \right]
 \]
@@ -167,13 +169,13 @@ That is, if we write $f$ for the sampled period signal, we will write $\vec f$ f
 Implicitly, in doing this, we are regarding these (sampled periodic) signals themselves as forming a vector space, and we have chosen a basis of such signals. Explicitly, when we write
 
 \begin{align*}
-\vec f = 
+\vec f =
 \left[
 \begin{matrix}
 f[0] \\
 f[1] \\
 \vdots \\
-f[N-1]	
+f[N-1]
 \end{matrix}
 \right]
 &=
@@ -184,7 +186,7 @@ f[0]
 0 \\
 \vdots \\
 0 \\
-0	
+0
 \end{matrix}
 \right]
 +
@@ -195,10 +197,10 @@ f[1]
 1 \\
 \vdots \\
 0 \\
-0	
+0
 \end{matrix}
 \right]
-+ 
++
 \cdots
 +
 f[N-1]
@@ -227,9 +229,15 @@ We remark that, unlike conventional notation we index our vectors (and later our
 
 Let us introduce the basic ``wave functions'' which we will use to describe our signals. These special periodic signals are described as complex number of unit length, that rotate about the origin at a constant rate.
 
-That is, such a wave function $E$ will be determined by an angle $\theta$, and when measured at time $j$, yields a complex number of unit length, making an angle of $j\theta$ in the counterclockwise direction with the positive $x$-axis, as shown below.
+That is, such a wave function $E$ will be determined by an angle $\theta$, and when measured at time $j$, yields a complex number of unit length, making an angle of $j\theta$ in the counterclockwise direction with the positive $x$-axis, as shown in Figure~\ref{jtheta}.
 
-As described in Chapter~\ref{complex exponentials}, we may represent this complex number as 
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=90mm]{jtheta.jpg}
+\caption{unit complex number at angle $j \theta$ \label{jtheta}}
+\end{figure}
+
+As described in Chapter~\ref{complex exponentials}, we may represent this complex number as
 \[E[j] = e^{ij\theta} = \cos{j\theta} + i \sin{j \theta}.\]
 
 Of course, since we are interested in periodic signals, we will require that $N\theta$ is a multiple of $2\pi$. We therefore have the following natural choices for $\theta$:
@@ -243,7 +251,7 @@ For convenience, we let $\omega = e^{2 \pi i / N}$, so that we may write our bas
 
 The critical fact about these signals is that they also form a basis for the vector space of our periodic signals. That is, just as we may uniquely represent a signal $f$ as a linear combination of the signals $e_k$, we may also uniquely represent it is a linear combination of the signals $E_k$ as well. The change of basis matrix has a particularly nice form. It turns out to be equal to $1/N F_N$, where $F_N$ is the ``Fourier'' matrix. It's entries are given by $(F_N)_{k,j} = \omega^{-jk}$. That is, if we write $f = \sum f[k] e_k$, and do the matrix product:
 \[
-F_N 
+F_N
 \left[
 \begin{matrix}
 	f[0] \\
@@ -264,10 +272,12 @@ F_N
 \]
 
 Then the coefficients $\hat f[k]$ of the resulting vector, which are called the \textbf{Fourier coefficients} of $f$, are related to expressing $f$ in terms of the basic waveforms as follows:
-\[f = \sum_k f[k] e_k = \sum \frac 1 N \hat f[k] E_k. \]
+\begin{equation} \label{fourier basis expression}
+f = \sum_k f[k] e_k = \sum \frac 1 N \hat f[k] E_k.
+\end{equation}
 
 The matrix $F_N$ (or rather the corresponding linear transformation) is called \textbf{Discrete Fourier Transform}, and the vector
-\[\vec{\hat f} = F_N \vec f = 
+\[\vec{\hat f} = F_N \vec f =
 \left[
 \begin{matrix}
 	\hat f[0] \\
@@ -278,25 +288,42 @@ The matrix $F_N$ (or rather the corresponding linear transformation) is called \
 \right]
 \]
 is called the Fourier transform of $\vec f$. Note that since the Fourier coefficients are obtain by the application of a linear transformation, they satisfy
-\[\widehat{f + g}[k] = \hat f[k] + \hat g[k] \text{, and }\widehat{\lambda f}[k] = \lambda \hat f[k]\]
+\begin{equation} \label{hat is linear}
+\widehat{f + g}[k] = \hat f[k] + \hat g[k] \text{, and }\widehat{\lambda f}[k] = \lambda \hat f[k]
+\end{equation}
 for scalars $\lambda$.
 
 \medskip
 Let us work out the effect of this Fourier transform in some examples, starting with the standard basis signals $e_k$.
 As the $k$'th column of the matrix $F_N$ represents the effect of the Fourier tranform on the $k$'th basis vector $\vec e_k$, we find that $F_N \vec e_k$ is represented by the column vector $\begin{bmatrix} \omega^{0} \\ \omega^{-k} \\ \omega^{-2k} \\ \vdots \\ \omega^{-(N-1)k} \end{bmatrix}$. Since by definition, these entries are the Fourier coefficients $\hat e_k[j]$, we find the useful fact:
 \begin{equation} \label{fourier coeffs of std}
-\hat e_k[j] = \omega^{-jk}	
+\boxed{\hat e_k[j] = \omega^{-jk}}
 \end{equation}
-Using this, we can give a formula for the Fourier coefficients of a general signal $f = \sum_k f[k] e_k$. For this, we obtain:
+Using Equation~\ref{fourier coeffs of std} and Equation~\ref{hat is linear}, we can give a formula for the Fourier coefficients of a general signal $f = \sum_k f[k] e_k$. For this, we obtain:
+\begin{equation*}
+\hat f[j] = \widehat{\left(\sum_k f[k] e_k\right)}[j] = \sum_k f[k] \hat e_k[j] = \sum_k f[k] \omega^{-jk}
+\end{equation*}
+and so
 \begin{equation} \label{fourier coeffs formula}
-\hat f[j] = \widehat{\left(\sum_k f[k] e_k\right)}[j] = \sum_k f[k] \hat e_k[j] = \sum_k f[k] \omega^{-jk}	
+\boxed{\hat f[j] = \sum_k f[k] \omega^{-jk}}
 \end{equation}
-Finally, let us compute the Fourier coefficients of the standard wave functions. For this, we will simply use the definition of the Fourier coefficients, and their relation to the change of basis. We have, by definition:
+Finally, let us compute the Fourier coefficients of the standard wave functions. For this, we will simply use the definition of the Fourier coefficients, and their relation to the change of basis. We have, by applying Equation~\ref{fourier basis expression} in the case $f = E_j$:
 \begin{align*}
-	
+E_j &= \sum_k \frac{\hat E_j[k]}{N} E_k \\
+&= \frac{\hat E_j[0]}{N} E_0 + \cdots +
+\frac{\hat E_j[j-1]}{N} E_{j-1} + \frac{\hat E_j[j]}{N} E_{j} + \frac{\hat E_j[j+1]}{N} E_{j+1} + \cdots + \frac{\hat E_j[N-1]}{N} E_{N-1}
+\end{align*}
+But of course we can also write (trivially):
+\begin{align*}
+E_j &= 0 \cdot E_0 + \cdots +
+0 \cdot E_{j-1} + 1 \cdot E_{j} + 0 \cdot E_{j+1} + \cdots + 0 \cdot E_{N-1}
 \end{align*}
 
- 
+But since the signals $E_k$ form a basis, the expression for $E_j$ as a combination of the $E_k$'s is unique. Equating these gives:
+\begin{equation} \label{fourier coeffs of waveforms}
+\boxed{\hat E_j[k] = 0 \text{, if $k \neq j$, and } \hat E_j[j] = N}
+\end{equation}
+
 \section{Filters, circular convolution and circulant matrices}
 
 \section{The fast Fourier transform}
@@ -332,7 +359,7 @@ This formula can be verified by, for example, replacing each side by the corresp
 The complex exponential function -- that is, the function $e^z$ where $z$ can be any complex number, shares the usual familar properties with its real counterpart: $e^{z + w} = e^z e^w$, immediately giving again the multiplication rule from equation~\ref{angles add} above.
 
 \iffalse
-Let's visualize how the graph of the function $e^{i \theta}$ as a function of the real variable $\theta$. 
+Let's visualize how the graph of the function $e^{i \theta}$ as a function of the real variable $\theta$.
 \fi
 
 \iffalse
