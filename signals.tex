@@ -223,7 +223,7 @@ where the signal $e_k$ has values described by
 We remark that, unlike conventional notation we index our vectors (and later our matrices), starting with the index of $0$ (as in computer science).
 \end{notn}
 
-\subsection{The wave basis for period signals}
+\subsection{The wave basis for periodic signals}
 
 Let us introduce the basic ``wave functions'' which we will use to describe our signals. These special periodic signals are described as complex number of unit length, that rotate about the origin at a constant rate.
 
@@ -241,7 +241,7 @@ We can represent these periodic signals as follows. Setting $E_k$ to be the sign
 For convenience, we let $\omega = e^{2 \pi i / N}$, so that we may write our basic waveforms as:
 \[E_k[j] = \omega^{jk} \]
 
-The critical fact about these signals is that they also form a basis for the vector space of our periodic signals. That is, just as we may uniquely represent a signal $f$ as a linear combination of the signals $e_k$, we may also uniquely represent it is a linear combination of the signals $E_k$ as well. The change of basis matrix has a particularly nice form. It turns out to be equal to $1/N F_N$, where $F_N$ is the ``Fourier'' matrix. It's entries are given by $(F_N)_{j,k} = \omega^{-jk}$. That is, if we write $f = \sum f[k] e_k$, and do the matrix product:
+The critical fact about these signals is that they also form a basis for the vector space of our periodic signals. That is, just as we may uniquely represent a signal $f$ as a linear combination of the signals $e_k$, we may also uniquely represent it is a linear combination of the signals $E_k$ as well. The change of basis matrix has a particularly nice form. It turns out to be equal to $1/N F_N$, where $F_N$ is the ``Fourier'' matrix. It's entries are given by $(F_N)_{k,j} = \omega^{-jk}$. That is, if we write $f = \sum f[k] e_k$, and do the matrix product:
 \[
 F_N 
 \left[
@@ -264,7 +264,39 @@ F_N
 \]
 
 Then the coefficients $\hat f[k]$ of the resulting vector, which are called the \textbf{Fourier coefficients} of $f$, are related to expressing $f$ in terms of the basic waveforms as follows:
-\[f = \sum_k f[k] e_k = \sum \frac 1 N \hat f[k] E_k \]
+\[f = \sum_k f[k] e_k = \sum \frac 1 N \hat f[k] E_k. \]
+
+The matrix $F_N$ (or rather the corresponding linear transformation) is called \textbf{Discrete Fourier Transform}, and the vector
+\[\vec{\hat f} = F_N \vec f = 
+\left[
+\begin{matrix}
+	\hat f[0] \\
+	\hat f[1] \\
+	\vdots \\
+	\hat f[N-1]
+\end{matrix}
+\right]
+\]
+is called the Fourier transform of $\vec f$. Note that since the Fourier coefficients are obtain by the application of a linear transformation, they satisfy
+\[\widehat{f + g}[k] = \hat f[k] + \hat g[k] \text{, and }\widehat{\lambda f}[k] = \lambda \hat f[k]\]
+for scalars $\lambda$.
+
+\medskip
+Let us work out the effect of this Fourier transform in some examples, starting with the standard basis signals $e_k$.
+As the $k$'th column of the matrix $F_N$ represents the effect of the Fourier tranform on the $k$'th basis vector $\vec e_k$, we find that $F_N \vec e_k$ is represented by the column vector $\begin{bmatrix} \omega^{0} \\ \omega^{-k} \\ \omega^{-2k} \\ \vdots \\ \omega^{-(N-1)k} \end{bmatrix}$. Since by definition, these entries are the Fourier coefficients $\hat e_k[j]$, we find the useful fact:
+\begin{equation} \label{fourier coeffs of std}
+\hat e_k[j] = \omega^{-jk}	
+\end{equation}
+Using this, we can give a formula for the Fourier coefficients of a general signal $f = \sum_k f[k] e_k$. For this, we obtain:
+\begin{equation} \label{fourier coeffs formula}
+\hat f[j] = \widehat{\left(\sum_k f[k] e_k\right)}[j] = \sum_k f[k] \hat e_k[j] = \sum_k f[k] \omega^{-jk}	
+\end{equation}
+Finally, let us compute the Fourier coefficients of the standard wave functions. For this, we will simply use the definition of the Fourier coefficients, and their relation to the change of basis. We have, by definition:
+\begin{align*}
+	
+\end{align*}
+
+ 
 \section{Filters, circular convolution and circulant matrices}
 
 \section{The fast Fourier transform}
