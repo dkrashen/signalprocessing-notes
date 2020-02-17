@@ -141,13 +141,13 @@
 \fi
 
 \chapter{The Discrete Fourier Transform}
-
+\marginpar{\href{https://youtu.be/SmIaoE4fbgs}{YouTube}}
 The discrete Fourier transform is a tool to go between describing a sampled, periodic signal as a list of measurements and describing it as a combination of basic waveforms.
 
 \section{Periodic signals and their representations}
 
 \subsection{Periodic signals as vectors}
-
+\marginpar{\href{https://youtu.be/SmIaoE4fbgs?t=0m26s}{YouTube}}
 We start by imagining we have a periodic signal $f$, which we sample at a times $0, 1, 2, N-1$. We denote these measurements as
 \[ f[0], f[1], f[2], \ldots, f[N-1]. \]
 We assume that the signal is periodic with period $N$, so that the value at $N$ agrees with the value at $0$, the value at $N+1$ agrees with the value at $1$, etc. That is, we have $f[N] = f[0]$, and more generally $f[k + N] = f[k]$ for all $k$.
@@ -226,7 +226,7 @@ We remark that, unlike conventional notation we index our vectors (and later our
 \end{notn}
 
 \subsection{The wave basis for periodic signals}
-
+\marginpar{\href{https://youtu.be/SmIaoE4fbgs?t=3m30s}{YouTube}}
 Let us introduce the basic ``wave functions'' which we will use to describe our signals. These special periodic signals are described as complex number of unit length, that rotate about the origin at a constant rate.
 
 That is, such a wave function $E$ will be determined by an angle $\theta$, and when measured at time $j$, yields a complex number of unit length, making an angle of $j\theta$ in the counterclockwise direction with the positive $x$-axis, as shown in Figure~\ref{jtheta}.
@@ -248,7 +248,7 @@ We can represent these periodic signals as follows. Setting $E_k$ to be the sign
 \[E_k[j] = e^{ij\theta} = e^{ij2k\pi/N} = \left(e^{2\pi i / N}\right)^{jk}. \]
 For convenience, we let $\omega = e^{2 \pi i / N}$, so that we may write our basic waveforms as:
 \[E_k[j] = \omega^{jk} \]
-
+\marginpar{\href{https://youtu.be/SmIaoE4fbgs?t=10m06s}{YouTube}}
 The critical fact about these signals is that they also form a basis for the vector space of our periodic signals. That is, just as we may uniquely represent a signal $f$ as a linear combination of the signals $e_k$, we may also uniquely represent it is a linear combination of the signals $E_k$ as well. The change of basis matrix has a particularly nice form. It turns out to be equal to $1/N F_N$, where $F_N$ is the ``Fourier'' matrix. It's entries are given by $(F_N)_{k,j} = \omega^{-jk}$. That is, if we write $f = \sum f[k] e_k$, and do the matrix product:
 \[
 F_N
@@ -301,6 +301,7 @@ is called the Fourier transform of $\vec f$. Note that since the Fourier coeffic
 for scalars $\lambda$.
 
 \medskip
+\marginpar{\href{https://youtu.be/SmIaoE4fbgs?t=15m52s}{YouTube}}
 Let us work out the effect of this Fourier transform in some examples, starting with the standard basis signals $e_k$.
 As the $k$'th column of the matrix $F_N$ represents the effect of the Fourier tranform on the $k$'th basis vector $\vec e_k$, we find that $F_N \vec e_k$ is represented by the column vector $\begin{bmatrix} \omega^{0} \\ \omega^{-k} \\ \omega^{-2k} \\ \vdots \\ \omega^{-(N-1)k} \end{bmatrix}$. Since by definition, these entries are the Fourier coefficients $\hat e_k[j]$, we find the useful fact:
 \begin{equation} \label{fourier coeffs of std}
