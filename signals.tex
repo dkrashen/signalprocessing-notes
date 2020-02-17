@@ -276,6 +276,13 @@ Then the coefficients $\hat f[k]$ of the resulting vector, which are called the 
 f = \sum_k f[k] e_k = \sum \frac 1 N \hat f[k] E_k.
 \end{equation}
 
+\begin{prop} \label{fourier coeffs determine}
+A signal is completely determined by its Fourier coefficients. That is, if two signals $f$ and $g$ satisfy $\hat f[k] = \hat g[k]$ for all $k$, then $f = g$.
+\end{prop}
+\begin{proof}
+This follows from the fact that the Fourier coefficients directly determine the coefficients of a signal expressed as a vector in the basis of waveforms, by Equation~\ref{fourier basis expression}.
+\end{proof}
+
 The matrix $F_N$ (or rather the corresponding linear transformation) is called \textbf{Discrete Fourier Transform}, and the vector
 \[\vec{\hat f} = F_N \vec f =
 \left[
@@ -326,7 +333,95 @@ But since the signals $E_k$ form a basis, the expression for $E_j$ as a combinat
 
 \section{Filters, circular convolution and circulant matrices}
 
+In this section, we will take a look at the concept of filters from a few different computational vantage points. Filters represent a certain class of linear transformations, which take a signal and produce a new one with a modified frequency spectrum, amplifying certain frequencies, dampening others, and shifting the phase of some. Intuitively, these behave somewhat like an equalizer -- boosting the mid frequencies, while dampening the high ones, etc.
+
+One subtelty of these ideas, is how these particular linear transformations are represeted in terms of different choices of bases. From the above description, it probably comes as no surprise that the description of a filter is represented particulalry easily in terms of the wave basis. Interestingly, there is another description, still fairly simple, in terms of the standard basis as well -- this involves the notion of convolution of functions. Finally, we will also explore another method of representing a filter, via a special class of matrices, called circulant matrices.
+
+\subsection{Filters and Fourier coefficients}
+
+
+As has been described, we think of a filter as a process which takes one function and modifies the waveforms which compose it by amplifying, damping or phase shifting. So, how does one specify a paricular rubric specifying how each waveforms is to be modified? Intuitively, one would want to associate a number to each basic waveform -- but in fact, this is nothing but a vector expressed in the wave basis, corresponding to another signal.
+
+In summary, given a signal $f$, we can use $f$ as a template create a filter which modifies other signals. We use the following notations: for another signal $y$, we write
+\[ T_f y  \text{ or } f * y \]
+to represent the action of a filter, built from the waveforms arising in $f$, applied to $y$. These filters are defined in the following way:
+
+\begin{defn} \label{filter def}
+Given signals $f$ and $y$, we define $T_f y = f * y$ to be the unique the signal with Fourier coefficients:
+\[ \widehat{f * y} [k] = \hat f[k] \hat y[k]. \]
+\end{defn}
+Note that this is a sufficient definition by Proposition~\ref{fourier coeffs determine}.
+
+Let's think of what this means for a signals which have been written in the wave basis. Suppose that $f = \sum_k a_k E_k, y = \sum_k b_k E_k$. We will write $f * y = \sum_k c_k E_k$ and solve for the coefficients $c_k$ in terms of our expressions for $f$ and $y$. By Equation~\ref{fourier basis expression}, we may identify $\hat f[k] = N a_k, \hat y[k] = N b_k, \widehat{f * y}[k] = N c_k$. This tells us
+\[ Nc_k = \widehat{f * y}[k] = \hat f[k] \hat y[k] = N^2 a_k b_k \]
+which tells us
+\begin{equation}
+c_k = N a_k b_k
+\end{equation}
+
+To get a feeling for that, let's consider an example:
+
+\begin{ex}
+Let $N = 4$, $f = i E_0 - 2 E_1 + 3 E_2 + (2 - i) E_3$ and $y = 2 E_0 + E_1 - 5 E_2 - E_3$. We then have
+\begin{align*}
+f * y &= (4)(i)(2) E_0 + (4)(-2)(1) E_1 + (4)(3)(-5) E_2 + (4)(2 - i)(-1) E_3 \\
+&= 8i E_0 - 8 E_1 - 60 E_2 + (-8 + 4i) E_3
+\end{align*}
+\end{ex}
+
+\subsection{Filters and convolution}
+
+Let us take a look at the effect of filtering in the standard basis. To aid us in our calculations, it will be useful to record a few facts about the filtering process.
+
+\begin{prop}
+Suppose we have signals $f, f_1, f_2, y, y_1, y_2$, and a scalar $\lambda$. Then:
+\begin{gather*}
+(f_1 + f_2) * y = f_1 * y + f_2 * y, \ f * (y_1 + y_2) = f * y_1 + f * y_2, \\ f * (\lambda y) = (\lambda f) * y = \lambda (f * y)
+\end{gather*}
+\end{prop}
+These identities may be checked by comparing Fourier coefficients (by Proposition~\ref{fourier coeffs determine}). For example, for the first identity, we see by Definition~\ref{filter def} by Equation~\ref{hat is linear}, we have:
+\begin{multline*}
+\widehat{\left((f_1 + f_2)*y\right)}[k] = \widehat{(f_1 + f_2)}[k] \hat y[k] = (\hat{f_1}[k] + \hat{f_2}[k]) \hat y[k] = \hat f_1[k] \hat y[k] + \hat f_2 \hat y[k] \\
+= \widehat{f_1 * y}[k] + \widehat{f_2 + y}[k]
+\end{multline*}
+and so, since this verifies that the signals $(f_1 + f_2)*y$ and $f_1 *y + f_2 * y$ have the same Fourier coefficients, they must be equal. The other identities may be checked similarly.
+
+Let us now explore the effects of filtering in terms of the standard basis:
+\begin{prop}
+We have $e_k * e*j = e_{k+j}$, where $k + j$ is taken to be addition in $\mathbb Z/N\mathbb Z$. That is, we identify $0$ with $N$ with $2N$, we identify $1$ with $N+1$, etc.
+\end{prop}
+\begin{proof}
+As before, we can verify this by comparing Fourier coefficents. By Definition~\ref{filter def}, the $\ell$'th Fourier coefficient of $e_k * e_j$ is computed as:
+\[\widehat{e_k * e_j}[\ell] = \hat e_k[\ell] \hat e_j[\ell]\]
+and by Equation~\ref{fourier coeffs of std}, this can be written as:
+\[\hat e_k[\ell] \hat e_j[\ell] = \omega^{-k\ell} \omega^{-j\ell} = \omega^{-(j + k)\ell} = \hat e_{j+k}[\ell].\]
+Therefore, the Fourier coefficients of $e_k * e_j$ and $e_{j+k}$ agree, and are therefore equal.
+\end{proof}
+
+From this, we obtain a very natural formula for the action of filtering. Given signals $f = \sum_k a_k e_k$ and $y = \sum_j b_j e_j$, (note that this means $f[k] = a_k$ and $y[j] = b_j$) we have
+\[f * y = \left(\sum_k a_k e_k\right)*\left(\sum_j b_j e_j\right) = \sum_{j,k} a_k e_k * b_j e_j = \sum_{j,k} a_k b_j e_{k + j}.\]
+We can obtain a formula written in a slightly different way by introducing a new variable $\ell$, and grouping terms of the form $e_\ell$ as follows:
+\begin{equation} \label{convolution scratchwork}
+f*y = \sum_{j,k}a_k b_j e_{k + j} = \sum_{\ell \in \mathbb Z/N\mathbb Z} \left(\sum_{\overset{j, k \in \mathbb Z/N\mathbb Z}{j + k = \ell}} a_k b_j\right)e_{\ell} = \sum_{\ell \in \mathbb Z/N\mathbb Z} \left(\sum_{k \in \mathbb Z/N\mathbb Z} a_kb_{N-k}\right)e_\ell
+\end{equation}
+
+This particular formula is also known as the \textbf{circular convolution}.
+
+\begin{defn}
+Let $f, y$ be signals. We define the circular convolution of $f \star y$ to be the signal with
+\[(f \star y)[\ell] = \sum_{k\in \mathbb Z/N\mathbb Z} f[k]y[N-k].\]
+\end{defn}
+
+\begin{thm}
+For signals $f, y$ we have $f * y = f \star y$.
+\end{thm}
+\begin{proof}
+This follows from Equation~\ref{convolution scratchwork}.
+\end{proof}
+
+\iffalse
 \section{The fast Fourier transform}
+\fi
 
 \appendix
 
@@ -369,10 +464,8 @@ In particular, it makes sense to extend this definition and simply define the ex
 \[z^s = r^s \cos s\theta + i r^s \sin s\theta\]
 \fi
 
-\section{Roots of unity}
-
-%\bibliographystyle{alpha}
-%\bibliography{citations}
+\bibliographystyle{alpha}
+\bibliography{citations}
 \printindex
 
 \end{document}
